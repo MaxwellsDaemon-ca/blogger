@@ -3,26 +3,49 @@ package com.milestone.blogger.model;
 import jakarta.persistence.*;
 import java.util.Date;
 
+/**
+ * Represents a user in the Blogging application.
+ */
 @Entity
 public class User {
 
+    /**
+     * The unique ID of the user.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    /**
+     * The username of the user.
+     */
     @Column(nullable = false, unique = true)
     private String username;
 
+    /**
+     * The email address of the user.
+     */
     @Column(nullable = false, unique = true)
     private String email;
 
+    /**
+     * The hashed password of the user.
+     */
     @Column(nullable = false)
     private String passwordHash;
 
+    /**
+     * The role of the user (e.g., admin, user).
+     */
     @Column(nullable = false)
     private String role;
 
+    /**
+     * The date the user joined the application.
+     */
     private Date datejoined;
+
+    // Getters and Setters
 
     public String getUsername() {
         return username;
@@ -71,5 +94,4 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
-
 }
