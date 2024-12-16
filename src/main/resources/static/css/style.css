@@ -1,0 +1,89 @@
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif; /* Plain, easy-to-read font */
+    background: linear-gradient(180deg, #AFA2FF 50%, #FFFFFF 100%); /* Subtle gradient */
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #A23B72; /* Secondary color */
+}
+
+.navbar a {
+    color: #FFFFFF !important; /* White text */
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+}
+
+.navbar a:hover {
+    color: #F5DBCB !important; /* Accent color on hover */
+}
+
+.navbar .nav-item {
+    display: inline-flex; /* Keep links and separators inline */
+    align-items: center; /* Vertically align the text and the bar */
+}
+
+.navbar .nav-item:not(:last-child)::after {
+    content: "|";
+    margin: 0 8px; /* Equal space on both sides of the vertical bar */
+    color: #FFFFFF; /* Match the link color */
+}
+
+.navbar .nav-link {
+    padding: 0; /* Remove extra padding from links */
+}
+
+/* Hero Section Styling */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: #AFA2FF; /* Primary color */
+    color: #FFFFFF;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+}
+
+/* Sticky Navbar */
+.sticky-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Blog Post Cards */
+.blog-placeholder {
+    background-color: rgba(240, 240, 240, 0.9); /* Mostly opaque off-white */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Styling */
+footer {
+    background-color: #A23B72; /* Secondary color */
+    color: #FFFFFF;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+}
