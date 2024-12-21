@@ -13,26 +13,27 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    /**
-     * Configures the security filter chain.
-     *
-     * @param http the {@link HttpSecurity} object to configure security settings.
-     * @return the configured {@link SecurityFilterChain}.
-     * @throws Exception if an error occurs during configuration.
-     */
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/css/**", "/js/**", "/users/login", "/users/register").permitAll()
-                        .anyRequest().authenticated())
-                .formLogin(login -> login
-                        .loginPage("/users/login")
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/users/logout")
-                        .logoutSuccessUrl("/"));
+        /**
+         * Configures the security filter chain.
+         *
+         * @param http the {@link HttpSecurity} object to configure security settings.
+         * @return the configured {@link SecurityFilterChain}.
+         * @throws Exception if an error occurs during configuration.
+         */
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .requestMatchers("/", "/css/**", "/js/**", "/users/login",
+                                                                "/users/register", "/users/logout")
+                                                .permitAll() // Public access
+                                                .anyRequest().authenticated()) // Restrict other pages
+                                .csrf(csrf -> csrf
+                                                .ignoringRequestMatchers("/users/login", "/users/register",
+                                                                "/users/logout")) // Allow CSRF bypass for
+                                // login/registration/logout
+                                .logout(logout -> logout.disable()); // Disable default Spring Security logout handling
 
-        return http.build();
-    }
+                return http.build();
+        }
 }

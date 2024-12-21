@@ -9,7 +9,7 @@ import java.util.Optional;
  * Repository interface for accessing and managing user data.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     /**
      * Finds a user by their username.

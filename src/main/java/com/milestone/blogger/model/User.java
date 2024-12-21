@@ -14,7 +14,7 @@ public class User {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     /**
      * The username of the user.
@@ -38,7 +38,7 @@ public class User {
      * The role of the user (e.g., admin, user).
      */
     @Column(nullable = false)
-    private String role;
+    private String role = "user";
 
     /**
      * The date the user joined the application.
@@ -79,11 +79,11 @@ public class User {
         this.datejoined = datejoined;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
