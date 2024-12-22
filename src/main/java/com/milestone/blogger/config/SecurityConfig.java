@@ -25,7 +25,7 @@ public class SecurityConfig {
                 http
                                 .authorizeHttpRequests(authorize -> authorize
                                                 .requestMatchers("/", "/css/**", "/js/**", "/users/login",
-                                                                "/users/register", "/users/logout")
+                                                                "/users/register", "/users/logout", "/posts/**")
                                                 .permitAll() // Public access
                                                 .anyRequest().authenticated()) // Restrict other pages
                                 .csrf(csrf -> csrf

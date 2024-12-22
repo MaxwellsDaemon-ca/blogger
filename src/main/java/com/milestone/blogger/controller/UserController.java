@@ -123,6 +123,7 @@ public class UserController {
         }
 
         session.setAttribute("loggedIn", true);
+        session.setAttribute("userId", user.get().getId());
         logger.info("User logged in successfully: {}", username);
         return "redirect:/";
     }
