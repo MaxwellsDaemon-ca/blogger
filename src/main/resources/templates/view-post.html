@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:text="${post.title}">View Post</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<head>
-      <title th:text="${post.title}">View Post</title>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-      <link href="/css/style.css" rel="stylesheet">
-</head>
+    <link href="/css/style.css" rel="stylesheet" />
+  </head>
 
-<body>
-      <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
+  <body>
+    <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
 
-      <div class="container my-5">
-            <div class="row justify-content-center">
-                  <div class="col-md-8 offset-md-2 blog-placeholder view-post-container">
-                        <h1 th:text="${post.title}" class="mb-3">Post Title</h1>
-                        <p th:text="${post.content}">Post Content</p>
-                        <small>Post Date: <span th:text="${formattedDate}"></span>
-                        </small>
-                        <br><br>
-                        <div th:if="${loggedIn and post.user.id == userId}">
-                              <a class="btn btn-primary" th:href="@{/posts/{id}/edit(id=${post.id})}">Edit</a>
-                              <a class="btn btn-danger" th:href="@{/posts/{id}/delete(id=${post.id})}">Delete</a>
-                        </div>
-                  </div>
-            </div>
+    <div class="container my-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8 offset-md-2 blog-placeholder view-post-container">
+          <h1 th:text="${post.title}" class="mb-3">Post Title</h1>
+          <p th:text="${post.content}">Post Content</p>
+          <small>Post Date: <span th:text="${formattedDate}"></span> </small>
+          <br /><br />
+          <div th:if="${loggedIn and post.user.id == userId}">
+            <a
+              class="btn btn-primary"
+              th:href="@{/posts/{id}/edit(id=${post.id})}"
+              >Edit</a
+            >
+            <a
+              class="btn btn-danger"
+              th:href="@{/posts/{id}/delete(id=${post.id})}"
+              >Delete</a
+            >
+          </div>
+        </div>
       </div>
+    </div>
 
-      <footer class="text-center my-3">
-            <p>&copy; 2024 BloggingApp. All rights reserved.</p>
-      </footer>
-</body>
-
+    <footer class="text-center my-3">
+      <p>&copy; 2024 BloggingApp. All rights reserved.</p>
+    </footer>
+  </body>
 </html>
