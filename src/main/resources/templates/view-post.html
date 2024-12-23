@@ -8,43 +8,15 @@
 </head>
 
 <body>
-      <!-- <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div> -->
-      <nav class="navbar navbar-expand-lg sticky-navbar">
-            <div class="container">
-                  <a class="navbar-brand" href="/" style="font-weight: bold">BloggingApp</a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                              <li class="nav-item" th:if="${loggedIn == false or loggedIn == null}">
-                                    <a class="nav-link" href="/users/login">Login</a>
-                              </li>
-                              <li class="nav-item" th:if="${loggedIn == false or loggedIn == null}">
-                                    <a class="nav-link" href="/users/register">Register</a>
-                              </li>
-                              <li class="nav-item" th:if="${loggedIn == true}">
-                                    <a class="nav-link" href="/users/profile">Profile</a>
-                              </li>
-                              <li class="nav-item" th:if="${loggedIn == true}">
-                                    <a class="nav-link" href="/posts/new">New Post</a>
-                              </li>
-                              <li class="nav-item" th:if="${loggedIn == true}">
-                                    <a class="nav-link" href="/users/logout">Logout</a>
-                              </li>
-                        </ul>
-                  </div>
-            </div>
-      </nav>
+      <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
 
       <div class="container my-5">
             <div class="row justify-content-center">
                   <div class="col-md-8 offset-md-2 blog-placeholder view-post-container">
                         <h1 th:text="${post.title}" class="mb-3">Post Title</h1>
                         <p th:text="${post.content}">Post Content</p>
-                        <!-- <small th:text="${#temporals.format(T(java.util.Date).cast(post.createdAt),'dd MMM yyyy HH:mm')}">Post
-                              Date</small> -->
+                        <small>Post Date: <span th:text="${formattedDate}"></span>
+                        </small>
                         <br><br>
                         <div th:if="${loggedIn and post.user.id == userId}">
                               <a class="btn btn-primary" th:href="@{/posts/{id}/edit(id=${post.id})}">Edit</a>

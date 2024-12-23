@@ -41,7 +41,7 @@
                                     <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a>
                               </h3>
                               <p th:text="${#strings.abbreviate(post.content,100)}">Post Content</p> -->
-                              <!-- <small th:text="${#temporals.format(post.createdAt,'dd MMM yyyy HH:mm')}">Date</small> -->
+                              <!-- <span th:text="${#temporals.format(post.createdAt,'dd MMM yyyy HH:mm')}">Date</span> -->
                         <!-- </li>
                   </ul>
             </div> -->

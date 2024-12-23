@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+
         /**
          * Configures the security filter chain.
          *
@@ -22,17 +23,11 @@ public class SecurityConfig {
          */
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                http
-                                .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers("/", "/css/**", "/js/**", "/users/login",
-                                                                "/users/register", "/users/logout", "/posts/**")
-                                                .permitAll() // Public access
-                                                .anyRequest().authenticated()) // Restrict other pages
-                                .csrf(csrf -> csrf
-                                                .ignoringRequestMatchers("/users/login", "/users/register",
-                                                                "/users/logout")) // Allow CSRF bypass for
-                                // login/registration/logout
-                                .logout(logout -> logout.disable()); // Disable default Spring Security logout handling
+            http
+                    .authorizeHttpRequests(auth -> auth
+                            .anyRequest().permitAll())
+                    .csrf(csrf -> csrf.disable())
+                    .formLogin(form -> form.disable());
 
                 return http.build();
         }

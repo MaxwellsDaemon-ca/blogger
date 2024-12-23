@@ -27,7 +27,6 @@ public class HomeController {
      */
     @GetMapping("/")
     public String showHomepage(Model model, HttpSession session) {
-        Boolean loggedIn = session.getAttribute("loggedIn") != null && (Boolean) session.getAttribute("loggedIn");
         model.addAttribute("posts", postRepository.findAll());
 
         return "homepage";

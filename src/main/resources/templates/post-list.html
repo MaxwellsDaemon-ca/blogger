@@ -8,10 +8,11 @@
 </head>
 
 <body>
-      <!-- <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div> -->
+      <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
 
       <div class="container my-5">
-            <div th:replace="fragments/post-list :: postListFragment(posts=${posts})"></div>
+            <div th:replace="~{fragments/post-list :: postListFragment(posts=${posts})}
+"></div>
       </div>
 
       <footer>
