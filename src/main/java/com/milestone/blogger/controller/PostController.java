@@ -43,9 +43,8 @@ public class PostController {
        */
       @GetMapping
       public String listPosts(Model model, HttpSession session) {
-            logger.info("Accessing all posts.");
+            logger.info("listPosts(): Accessing all posts.");
             model.addAttribute("posts", postRepository.findAll());
-
             return "post-list";
       }
 
@@ -59,10 +58,10 @@ public class PostController {
        */
       @GetMapping("/{id}")
       public String viewPost(@PathVariable int id, Model model, HttpSession session) {
-            logger.info("Attempting to View Post.");
+            logger.info("viewPost(): Attempting to View Post.");
             Optional<Post> post = postRepository.findById(id);
             if (post.isEmpty()) {
-                  logger.warn("Post is empty.");
+                  logger.warn("viewPost(): Post is empty.");
                   return "redirect:/posts";
             }
 
@@ -71,7 +70,7 @@ public class PostController {
             model.addAttribute("post", post.get());
             model.addAttribute("formattedDate",
                         new SimpleDateFormat("dd MMM yyyy HH:mm").format(post.get().getCreatedAt()));
-            logger.info("Post viewed.");
+            logger.info("viewPost(): Exiting.");
             return "view-post";
       }
 
@@ -84,15 +83,15 @@ public class PostController {
        */
       @GetMapping("/new")
       public String showNewPostForm(Model model, HttpSession session) {
-            logger.info("Attempting to view create new Post page.");
+            logger.info("showNewPostForm(): Attempting to view create new Post page.");
             Boolean loggedIn = session.getAttribute("loggedIn") != null && (Boolean) session.getAttribute("loggedIn");
             if (!loggedIn) {
-                  logger.warn("User not logged in, unable to view new Post page.");
+                  logger.warn("showNewPostForm(): User not logged in, unable to view new Post page.");
                   return "redirect:/users/login";
             }
 
             model.addAttribute("post", new Post());
-            logger.info("Viewing new Post page.");
+            logger.info("showNewPostForm(): Exiting.");
             return "new-post";
       }
 
@@ -105,18 +104,19 @@ public class PostController {
        */
       @PostMapping("/new")
       public String createPost(@ModelAttribute Post post, HttpSession session) {
-            logger.info("Attempting to create new post.");
+            logger.info("createPost(): Attempting to create new post.");
             Boolean loggedIn = session.getAttribute("loggedIn") != null && (Boolean) session.getAttribute("loggedIn");
             Long userId = (Long) session.getAttribute("userId");
 
             if (!loggedIn || userId == null) {
-                  logger.info("unable to create new post, user not logged in.");
+                  logger.warn("createPost(): unable to create new post, user not logged in.");
                   return "redirect:/users/login";
             }
 
             // Fetch the user who is creating the post
             Optional<User> user = userRepository.findById(userId);
             if (user.isEmpty()) {
+                  logger.warn("createPost(): unable to create new post, user is empty.");
                   return "redirect:/users/login";
             }
 
@@ -125,7 +125,7 @@ public class PostController {
             post.setUpdatedAt(new Date());
             postRepository.save(post);
 
-            logger.info("New post created.");
+            logger.info("createPost(): New post created. Exiting.");
 
             return "redirect:/posts";
       }
@@ -142,19 +142,19 @@ public class PostController {
        */
       @GetMapping("/{id}/edit")
       public String showEditPostForm(@PathVariable int id, Model model, HttpSession session) {
-            logger.info("Attempting to show edit post form.");
+            logger.info("showEditPostForm(): Attempting to show edit post form.");
             Optional<Post> post = postRepository.findById(id);
             if (post.isEmpty()) {
-                  logger.warn("Post empty, unable to edit.");
+                  logger.warn("showEditPostForm(): Post empty, unable to edit.");
                   return "redirect:/posts";
             }
 
             if(!verifyUserOwnsPost(session, post.get())) {
-                  logger.warn("post not owned by logged in user, cannot edit post.");
+                  logger.warn("showEditPostForm(): Post not owned by logged in user, cannot edit post.");
                   return "redirect:/posts";
             }
 
-            logger.info("Viewing edit post page.");
+            logger.info("showEditPostForm(): Exiting.");
             model.addAttribute("post", post.get());
             return "edit-post";
       }
@@ -170,15 +170,15 @@ public class PostController {
        */
       @PostMapping("/{id}/edit")
       public String updatePost(@PathVariable int id, @ModelAttribute Post updatedPost, HttpSession session) {
-            logger.info("Attempting to edit post.");
+            logger.info("updatePost(): Attempting to edit post.");
             Optional<Post> existingPost = postRepository.findById(id);
             if (existingPost.isEmpty()) {
-                  logger.warn("Post is empty, unable to edit.");
+                  logger.warn("updatePost(): Post is empty, unable to edit.");
                   return "redirect:/posts";
             }
 
             if(!verifyUserOwnsPost(session, existingPost.get())) {
-                  logger.warn("User not owner of post. Unable to edit.");
+                  logger.warn("updatePost(): User not owner of post. Unable to edit.");
                   return "redirect:/posts";
             }
 
@@ -188,7 +188,7 @@ public class PostController {
             post.setUpdatedAt(new Date());
             postRepository.save(post);
 
-            logger.info("Post successfully edited.");
+            logger.info("updatePost(): Post successfully edited. Exiting.");
 
             return "redirect:/posts/" + post.getId();
       }
@@ -203,19 +203,20 @@ public class PostController {
        */
       @GetMapping("/{id}/delete")
       public String deletePost(@PathVariable int id, HttpSession session) {
-            logger.info("Attempting to delete post.");
+            logger.info("deletePost(): Attempting to delete post.");
             Optional<Post> post = postRepository.findById(id);
             if (post.isEmpty()) {
-                  logger.warn("post is empty, unable to delete.");
+                  logger.warn("deletePost(): Post is empty, unable to delete.");
                   return "redirect:/posts";
             }
 
             if(!verifyUserOwnsPost(session, post.get())) {
-                  logger.warn("Post not owned by user, unable to delete.");
+                  logger.warn("deletePost(): Post not owned by user, unable to delete.");
                   return "redirect:/posts";
             }
 
             postRepository.delete(post.get());
+            logger.info("deletePost(): Post successfully deleted. Exiting.");
             return "redirect:/posts";
       }
 
@@ -227,18 +228,22 @@ public class PostController {
        * @return true if the user is logged in and owns the post; false otherwise.
        */
       private boolean verifyUserOwnsPost(HttpSession session, Post post) {
+            logger.info("verifyUserOwnsPost(): Attempting to verify post ownership.");
             // Check if the user is logged in
             Boolean loggedIn = session.getAttribute("loggedIn") != null && (Boolean) session.getAttribute("loggedIn");
             if (!loggedIn) {
+                  logger.warn("verifyUserOwnsPost(): User not logged in.");
                   return false;
             }
 
             // Get the logged-in user's ID from the session
             Long userId = (Long) session.getAttribute("userId");
             if (userId == null) {
+                  logger.warn("verifyUserOwnsPost(): UserID is null.");
                   return false;
             }
 
+            logger.info("verifyUserOwnsPost(): Exiting.");
             // Check if the logged-in user is the owner of the post
             return userId.equals(post.getUser().getId());
       }

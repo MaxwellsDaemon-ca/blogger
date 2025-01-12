@@ -38,6 +38,8 @@ public class UserController {
      */
     @ModelAttribute("loggedIn")
     public Boolean addLoggedInAttribute(HttpSession session) {
+        logger.info("Entering addLoggedInAttribute()");
+        logger.info("Exiting addLoggedInAttribute()");
         return session.getAttribute("loggedIn") != null && (Boolean) session.getAttribute("loggedIn");
     }
 
@@ -48,7 +50,7 @@ public class UserController {
      */
     @GetMapping("/register")
     public String showRegistrationPage() {
-        logger.info("Accessed registration page.");
+        logger.info("showRegistrationPage(): Accessing Registration Page");
         return "register";
     }
 
@@ -62,28 +64,35 @@ public class UserController {
      */
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user, Model model) {
-        logger.info("Attempting to register user: {}", user.getUsername());
+        logger.info("Entering registerUser()");
+        
+        String username = user.getUsername();
+        String email = user.getEmail();
 
-        boolean usernameExists = userRepository.findByUsername(user.getUsername()).isPresent();
-        boolean emailExists = userRepository.findByEmail(user.getEmail()).isPresent();
+        logger.info("Attempting to register user: {}", username);
+
+        boolean usernameExists = userRepository.findByUsername(username).isPresent();
+        boolean emailExists = userRepository.findByEmail(email).isPresent();
 
         if (usernameExists) {
-            logger.warn("Registration failed: Username '{}' already exists.", user.getUsername());
-            model.addAttribute("usernameError", "Username '" + user.getUsername() + "' is already taken.");
+            logger.warn("Registration failed: Username '{}' already exists.", username);
+            model.addAttribute("usernameError", "Username '" + username + "' is already taken.");
         }
         if (emailExists) {
-            logger.warn("Registration failed: Email '{}' already exists.", user.getEmail());
-            model.addAttribute("emailError", "Email '" + user.getEmail() + "' is already registered.");
+            logger.warn("Registration failed: Email '{}' already exists.", email);
+            model.addAttribute("emailError", "Email '" + email + "' is already registered.");
         }
         if (usernameExists || emailExists) {
+            logger.info("Exiting registerUser()");
             return "register";
         }
 
         user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
         user.setDatejoined(new Date());
         userRepository.save(user);
-        logger.info("User registered successfully: {}", user.getUsername());
+        logger.info("User registered successfully: {}", username);
         model.addAttribute("success", "User registered successfully. Please log in.");
+        logger.info("Exiting registerUser()");
         return "login";
     }
 
@@ -94,7 +103,7 @@ public class UserController {
      */
     @GetMapping("/login")
     public String showLoginPage() {
-        logger.info("Accessed login page.");
+        logger.info("showLoginPage(): Accessed login page.");
         return "login";
     }
 
@@ -113,18 +122,21 @@ public class UserController {
             @RequestParam String password,
             HttpSession session,
             Model model) {
+        logger.info("Entering loginUser()");
         logger.info("User login attempt: {}", username);
         Optional<User> user = userRepository.findByUsername(username);
 
         if (user.isEmpty() || !passwordEncoder.matches(password, user.get().getPasswordHash())) {
             logger.warn("Login failed for username: {}", username);
             model.addAttribute("error", "Invalid username or password.");
+            logger.info("Exiting loginUser()");
             return "login";
         }
 
         session.setAttribute("loggedIn", true);
         session.setAttribute("userId", user.get().getId());
         logger.info("User logged in successfully: {}", username);
+        logger.info("Exiting loginUser()");
         return "redirect:/";
     }
 
@@ -137,8 +149,10 @@ public class UserController {
      */
     @GetMapping("/logout")
     public String logoutUser(HttpSession session) {
-        logger.info("User logged out.");
+        logger.info("Entering logoutUser()");
         session.invalidate();
+        logger.info("User logged out.");
+        logger.info("Exiting logoutUser()");
         return "redirect:/";
     }
 }
