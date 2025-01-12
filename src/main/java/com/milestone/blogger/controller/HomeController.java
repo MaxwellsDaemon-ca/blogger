@@ -33,7 +33,6 @@ public class HomeController {
     public String showHomepage(Model model, HttpSession session) {
         logger.info("showHomepage(): Accessing homepage");
         model.addAttribute("posts", postRepository.findAll());
-
         return "homepage";
     }
 }

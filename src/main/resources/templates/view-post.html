@@ -20,8 +20,11 @@
       <div class="row justify-content-center">
         <div class="col-md-8 offset-md-2 blog-placeholder view-post-container">
           <h1 th:text="${post.title}" class="mb-3">Post Title</h1>
+          <h5 th:text="${post.user.username}" class="mb-3">Poster</h5>
           <p th:text="${post.content}">Post Content</p>
-          <small>Post Date: <span th:text="${formattedDate}"></span> </small>
+          <small>Post Date: <span th:text="${#dates.format(post.createdAt, 'EEE MMM dd, yyyy - hh:mm aa')}"></span></small>
+          <br />
+          <small>Updated Date: <span th:text="${#dates.format(post.updatedAt, 'EEE MMM dd, yyyy - hh:mm aa')}"></span></small>
           <br /><br />
           <div th:if="${loggedIn and post.user.id == userId}">
             <a

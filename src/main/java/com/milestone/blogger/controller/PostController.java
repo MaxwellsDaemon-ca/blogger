@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -68,8 +67,6 @@ public class PostController {
             Long postCreatorId = (Long) session.getAttribute("userId");
             model.addAttribute("userId", postCreatorId);
             model.addAttribute("post", post.get());
-            model.addAttribute("formattedDate",
-                        new SimpleDateFormat("dd MMM yyyy HH:mm").format(post.get().getCreatedAt()));
             logger.info("viewPost(): Exiting.");
             return "view-post";
       }

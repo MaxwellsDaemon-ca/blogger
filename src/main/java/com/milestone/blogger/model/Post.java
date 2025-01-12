@@ -3,6 +3,8 @@ package com.milestone.blogger.model;
 import jakarta.persistence.*;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Post {
 
@@ -36,11 +38,14 @@ public class Post {
        * The timestamp when the post was created.
        */
       @Column(nullable = false, updatable = false)
+      @DateTimeFormat(pattern = "dd MMM yyyy HH:mm")
       private Date createdAt;
 
       /**
        * The timestamp when the post was last updated.
        */
+      @Column(nullable = false, updatable = true)
+      @DateTimeFormat(pattern = "dd MMM yyyy HH:mm")
       private Date updatedAt;
 
       // Getters and Setters
