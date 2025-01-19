@@ -14,40 +14,42 @@
   </head>
 
   <body>
-    <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
+    <main>
+      <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
 
-    <div class="container my-5">
-      <h2>Edit Post</h2>
-      <form
-        th:action="@{/posts/{id}/edit(id=${post.id})}"
-        th:object="${post}"
-        method="post"
-      >
-        <div class="mb-3">
-          <label for="title" class="form-label">Title</label>
-          <input
-            type="text"
-            th:field="*{title}"
-            class="form-control"
-            id="title"
-            placeholder="Enter post title"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="content" class="form-label">Content</label>
-          <textarea
-            th:field="*{content}"
-            class="form-control"
-            id="content"
-            rows="5"
-            placeholder="Update your post"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn-success">Update</button>
-      </form>
-    </div>
+      <div class="container my-5">
+        <h2>Edit Post</h2>
+        <form
+          th:action="@{/posts/{id}/edit(id=${post.id})}"
+          th:object="${post}"
+          method="post"
+        >
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input
+              type="text"
+              th:field="*{title}"
+              class="form-control"
+              id="title"
+              placeholder="Enter post title"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="content" class="form-label">Content</label>
+            <textarea
+              th:field="*{content}"
+              class="form-control"
+              id="content"
+              rows="5"
+              placeholder="Update your post"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-success">Update</button>
+        </form>
+      </div>
+    </main>
 
-    <footer class="text-center my-3">
+    <footer>
       <p>&copy; 2024 BloggingApp. All rights reserved.</p>
     </footer>
   </body>

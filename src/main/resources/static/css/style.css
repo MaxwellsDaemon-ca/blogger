@@ -1,9 +1,20 @@
 /* Global styles for the Blogging application */
 
 /* General Body Styling */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
+  display: flex;
   font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #afa2ff 50%, #ffffff 100%);
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  background: linear-gradient(180deg, #afa2ff 50%, #ffffff 95%, #a23b72 100%);
   color: #333;
   margin: 0;
   padding: 0;
@@ -14,7 +25,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: #a23b72;
+  background: #a23b72;
 }
 
 .navbar a {
@@ -46,7 +57,7 @@ body {
 .hero {
   text-align: center;
   padding: 80px 20px;
-  background: #afa2ff;
+  background: linear-gradient(180deg, #afa2ff 95%, #a23b72 100%);
   color: #ffffff;
 }
 
@@ -66,6 +77,19 @@ body {
   margin-bottom: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+/* Ensure normal text styling inside post fragments */
+.blog-placeholder .card-body, .blog-placeholder .card-footer {
+  color: #333;
+  text-decoration: none;
+}
+
+/* Add hover effect to cards */
+.blog-link:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 10px rgba(128, 0, 128, 0.5);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
 
 .card {
   background-color: rgba(255, 255, 255, 0.9);
@@ -91,6 +115,7 @@ footer {
   color: #ffffff;
   padding: 10px 0;
   text-align: center;
+  flex-shrink: 0;
 }
 
 /* Responsive Design */

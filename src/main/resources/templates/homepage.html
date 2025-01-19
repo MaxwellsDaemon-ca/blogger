@@ -16,43 +16,45 @@
     <link href="/css/style.css" rel="stylesheet" />
   </head>
   <body>
-    <!-- Hero Section -->
-    <div class="hero">
-      <h1>Welcome to BloggingApp</h1>
-      <p>Share your thoughts, ideas, and stories with the world.</p>
-    </div>
+    <main>
+      <!-- Hero Section -->
+      <div class="hero">
+        <h1>Welcome to BloggingApp</h1>
+        <p>Share your thoughts, ideas, and stories with the world.</p>
+      </div>
 
-    <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
+      <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
 
-    <!-- Main Content -->
-    <div th:if="${posts != null and #lists.size(posts) > 0}">
+      <!-- Main Content -->
+      <div th:if="${posts != null and #lists.size(posts) > 0}">
+        <div
+          th:replace="~{fragments/post-list :: postListFragment(posts=${posts})}
+"
+        ></div>
+      </div>
+
       <div
-        th:replace="~{fragments/post-list :: postListFragment(posts=${posts})}
+        class="container my-5"
+        th:if="${posts == null or #lists.size(posts) == 0}"
+      >
+        <div class="row">
+          <div class="col-md-8">
+            <!-- Include the post list fragment if posts are present -->
+            <div th:if="${posts != null and #lists.size(posts) > 0}">
+              <div
+                th:replace="~{fragments/post-list :: postListFragment(posts=${posts})}
 "
-      ></div>
-    </div>
+              ></div>
+            </div>
 
-    <div
-      class="container my-5"
-      th:if="${posts == null or #lists.size(posts) == 0}"
-    >
-      <div class="row">
-        <div class="col-md-8">
-          <!-- Include the post list fragment if posts are present -->
-          <div th:if="${posts != null and #lists.size(posts) > 0}">
-            <div
-              th:replace="~{fragments/post-list :: postListFragment(posts=${posts})}
-"
-            ></div>
-          </div>
-
-          <div class="blog-placeholder">
-            <h2>No Posts Yet</h2>
-            <p>Be the first to create a post!</p>
+            <div class="blog-placeholder">
+              <h2>No Posts Yet</h2>
+              <p>Be the first to create a post!</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer>

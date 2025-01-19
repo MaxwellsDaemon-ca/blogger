@@ -21,31 +21,42 @@
             <h2 class="mb-4">All Posts</h2>
             <div class="row row-cols-1 gy-3">
               <div class="col" th:each="post : ${posts}">
-                <div class="card blog-placeholder">
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <a th:href="@{/posts/{id}(id=${post.id})}">
-                        <span th:text="${post.title}"></span> -
-                        <small
-                          class="text-muted"
-                          th:text="${post.user.username}"
-                        ></small>
-                      </a>
-                    </h5>
-                    <p
-                      class="card-text"
-                      th:text="${#strings.abbreviate(post.content, 200)}"
-                    >
-                      Post Content
-                    </p>
-                    <small class="text-muted">
-                      Last Updated:
-                      <span
-                        th:text="${#dates.format(post.updatedAt, 'EEE MMM dd, yyyy - hh:mm aa')}"
-                      ></span>
-                    </small>
+                <a
+                  class="text-decoration-none"
+                  th:href="@{/posts/{id}(id=${post.id})}"
+                >
+                  <div class="card blog-placeholder blog-link">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <span th:text="${post.title}"></span>
+                      </h5>
+                      <p
+                        class="card-text"
+                        th:text="${#strings.abbreviate(post.content, 200)}"
+                      >
+                        Post Content
+                      </p>
+                      <small class="text-muted">
+                        Last Updated:
+                        <span
+                          th:text="${#dates.format(post.updatedAt, 'EEE MMM dd, yyyy - hh:mm aa')}"
+                        ></span>
+                      </small>
+                    </div>
+
+                    <div class="card-footer">
+                      <small class="text-muted">
+                        Posted by:
+                        <a
+                          th:href="@{/users/{username}(username=${post.user.username})}"
+                          class="text-decoration-none"
+                        >
+                          <span th:text="${post.user.username}"></span>
+                        </a>
+                      </small>
+                    </div>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
           </div>

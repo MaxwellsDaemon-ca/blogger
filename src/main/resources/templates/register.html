@@ -16,80 +16,82 @@
     <link href="/css/style.css" rel="stylesheet" />
   </head>
   <body>
-    <!-- Header Section -->
-    <div class="hero">
-      <h1>Join BloggingApp</h1>
-      <p>Create an account to share your ideas!</p>
-    </div>
+    <main>
+      <!-- Header Section -->
+      <div class="hero">
+        <h1>Join BloggingApp</h1>
+        <p>Create an account to share your ideas!</p>
+      </div>
 
-    <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
+      <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
 
-    <!-- Registration Form -->
-    <div class="container my-5">
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="card p-4 shadow">
-            <h2>Register</h2>
-            <form th:action="@{/users/register}" method="post">
-              <!-- Username Field -->
-              <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="username"
-                  name="username"
-                  placeholder="Choose a username"
-                  required
-                />
-                <div
-                  th:if="${usernameError}"
-                  class="alert alert-danger mt-2"
-                  role="alert"
-                >
-                  <p th:text="${usernameError}"></p>
+      <!-- Registration Form -->
+      <div class="container my-5">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card p-4 shadow">
+              <h2>Register</h2>
+              <form th:action="@{/users/register}" method="post">
+                <!-- Username Field -->
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    name="username"
+                    placeholder="Choose a username"
+                    required
+                  />
+                  <div
+                    th:if="${usernameError}"
+                    class="alert alert-danger mt-2"
+                    role="alert"
+                  >
+                    <p th:text="${usernameError}"></p>
+                  </div>
                 </div>
-              </div>
-              <!-- Email Field -->
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  name="email"
-                  placeholder="Enter your email"
-                  required
-                />
-                <div
-                  th:if="${emailError}"
-                  class="alert alert-danger mt-2"
-                  role="alert"
-                >
-                  <p th:text="${emailError}"></p>
+                <!-- Email Field -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                  />
+                  <div
+                    th:if="${emailError}"
+                    class="alert alert-danger mt-2"
+                    role="alert"
+                  >
+                    <p th:text="${emailError}"></p>
+                  </div>
                 </div>
-              </div>
-              <!-- Password Field -->
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  name="passwordHash"
-                  placeholder="Choose a secure password"
-                  required
-                />
-              </div>
-              <!-- Submit Button -->
-              <button type="submit" class="btn btn-primary w-100">
-                Register
-              </button>
-            </form>
+                <!-- Password Field -->
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="passwordHash"
+                    placeholder="Choose a secure password"
+                    required
+                  />
+                </div>
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">
+                  Register
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer>

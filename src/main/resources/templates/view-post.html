@@ -14,35 +14,48 @@
   </head>
 
   <body>
-    <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
+    <main>
+      <div th:replace="~{fragments/nav :: navbar(loggedIn=${loggedIn})}"></div>
 
-    <div class="container my-5">
-      <div class="row justify-content-center">
-        <div class="col-md-8 offset-md-2 blog-placeholder view-post-container">
-          <h1 th:text="${post.title}" class="mb-3">Post Title</h1>
-          <h5 th:text="${post.user.username}" class="mb-3">Poster</h5>
-          <p th:text="${post.content}">Post Content</p>
-          <small>Post Date: <span th:text="${#dates.format(post.createdAt, 'EEE MMM dd, yyyy - hh:mm aa')}"></span></small>
-          <br />
-          <small>Updated Date: <span th:text="${#dates.format(post.updatedAt, 'EEE MMM dd, yyyy - hh:mm aa')}"></span></small>
-          <br /><br />
-          <div th:if="${loggedIn and post.user.id == userId}">
-            <a
-              class="btn btn-primary"
-              th:href="@{/posts/{id}/edit(id=${post.id})}"
-              >Edit</a
-            >
-            <a
-              class="btn btn-danger"
-              th:href="@{/posts/{id}/delete(id=${post.id})}"
-              >Delete</a
-            >
+      <div class="container my-5">
+        <div class="row justify-content-center">
+          <div
+            class="col-md-8 offset-md-2 blog-placeholder view-post-container"
+          >
+            <h1 th:text="${post.title}" class="mb-3">Post Title</h1>
+            <h5 th:text="${post.user.username}" class="mb-3">Poster</h5>
+            <p th:text="${post.content}">Post Content</p>
+            <small
+              >Post Date:
+              <span
+                th:text="${#dates.format(post.createdAt, 'EEE MMM dd, yyyy - hh:mm aa')}"
+              ></span
+            ></small>
+            <br />
+            <small
+              >Updated Date:
+              <span
+                th:text="${#dates.format(post.updatedAt, 'EEE MMM dd, yyyy - hh:mm aa')}"
+              ></span
+            ></small>
+            <br /><br />
+            <div th:if="${loggedIn and post.user.id == userId}">
+              <a
+                class="btn btn-primary"
+                th:href="@{/posts/{id}/edit(id=${post.id})}"
+                >Edit</a
+              >
+              <a
+                class="btn btn-danger"
+                th:href="@{/posts/{id}/delete(id=${post.id})}"
+                >Delete</a
+              >
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <footer class="text-center my-3">
+    </main>
+    <footer>
       <p>&copy; 2024 BloggingApp. All rights reserved.</p>
     </footer>
   </body>
